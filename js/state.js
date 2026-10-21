@@ -16,7 +16,7 @@ const stOf=l=>l.status||'Active',ok=n=>n&&!isNaN(n.lat)&&!isNaN(n.lng);
 const km=(a,b)=>{const r=Math.PI/180,x=Math.sin((b.lat-a.lat)*r/2)**2+Math.cos(a.lat*r)*Math.cos(b.lat*r)*Math.sin((b.lng-a.lng)*r/2)**2;return 12742*Math.asin(Math.sqrt(x))};
 const cnt=(a,f)=>a.reduce((o,x)=>{const k=f(x)||'—';o[k]=(o[k]||0)+1;return o},{});
 const stTag=s=>`<span class="tag ${s=='Down'?'dn':s=='Planned'?'pl':'ok'}">${s}</span>`,roleTag=r=>`<span class="tag ${r=='Primary'?'pr':'se'}">${esc(r)}</span>`;
-function persist(){try{localStorage.setItem(KEY,JSON.stringify(D))}catch(e){}$('dirty').style.display='block'}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(D))}catch(e){}if(typeof ghOn=='function'&&ghOn())ghQueue();else $('dirty').style.display='block'}
 function toast(t,lbl,fn){const e=$('toast');e.innerHTML=`<span>${esc(t)}</span>`;if(lbl){const b=document.createElement('button');b.textContent=lbl;b.onclick=()=>{fn();e.style.display='none'};e.append(b)}
  e.style.display='flex';clearTimeout(toast.t);toast.t=setTimeout(()=>e.style.display='none',lbl?7000:3500)}
 
